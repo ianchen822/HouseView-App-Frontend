@@ -4,13 +4,18 @@ import { useState } from "react";
 import {useNavigate} from "react-router-dom"
 import axios from "axios";
 
-const Login = () => {
+const Login = ({user}) => {
 
-    const [account, setAccont] = useState("");
+    console.log("Login user check:", user);
+    const [account, setAccount] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
     const [error, setError] = useState("")
     
+    // if (user) {
+    //     navigate("/")
+    // }
+
     const handleLogin = async (e) => {
         
         // 避免提交後瀏覽器刷新頁面
@@ -27,7 +32,9 @@ const Login = () => {
                 // localstorage 是瀏覽器提供的 api，代表 user 本身的儲存空間
                 // setItem 是其中的一個功能，可以用來建立 key-value 資訊
                 // 這裡取得 response.data.token，對應後端 { token: "jwt_token" }
-                localStorage.setItem("token", response.data.token);
+                await localStorage.setItem("token", response.data.token);
+                // await new Promise((resolve) => setTimeout(resolve, 0));
+                // localStorage.setItem("user", response.data.user);
                 // 導引至首頁 Home (navigate 需搭配 router 套件並在 app.js 設定路由)
                 navigate("/");
             }
@@ -64,7 +71,7 @@ const Login = () => {
                         // e 代表事件對象，即 onChange 用來記錄有關事件的資訊
                         // e.target 是觸發事件的 DOM 元素，即 input
                         // 當輸入變化時，觸發 onChange 事件，更新 state 變數，從而更新 value，再重新渲染組件 (set 語法會重新渲染)
-                        onChange={(e) => setAccont(e.target.value)}
+                        onChange={(e) => setAccount(e.target.value)}
                     />
                     <input
                         type="password"

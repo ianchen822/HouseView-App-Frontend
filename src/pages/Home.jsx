@@ -4,10 +4,11 @@ import SearchBar from "../components/SearchBar";
 import HouseList from "../components/HouseList";
 import Footer from "../components/Footer";
 
-const Home = () => {
+const Home = ({user}) => {
+  console.log("Home user check:", user);
   return (
     <div>
-      <Navbar />
+      <Navbar user={user} />
       <SearchBar />
       <HouseList />
       <Footer />
